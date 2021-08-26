@@ -25,7 +25,11 @@ M.go = function(...)
 		--When using g@, the marks [ and ] will contain the position of the
 		--start and the end of the motion, respectively. vim.fn.getpos() returns
 		--a tuple with the line and column of the position.
-		M.comment_in_multi_single_line(vim.fn.getpos("'[")[2], vim.fn.getpos("']")[2], language)
+		if language[3] then
+      M.multicomment_in_multi_line(vim.fn.getpos("'[")[2], vim.fn.getpos("']")[2], language)
+		else
+      M.comment_in_multi_single_line(vim.fn.getpos("'[")[2], vim.fn.getpos("']")[2], language)
+		end
 	elseif mode == "v" then
 		-- visual mode
 		M.comment_in_line(vim.fn.getpos("v")[2], language)
@@ -34,7 +38,7 @@ M.go = function(...)
 	elseif mode == "V" then
 		--Visual mode
 		--the index 3 is perfer_multiline boolean
-		if not language[3] then
+		if language[3] then
 			M.multicomment_in_multi_line(vim.fn.getpos("v")[2], vim.fn.getcurpos()[2], language)
 		else
 			M.comment_in_multi_single_line(vim.fn.getpos("v")[2], vim.fn.getcurpos()[2], language)
@@ -45,6 +49,8 @@ M.go = function(...)
 	end
 end
 
+--@param languages table
+--@param use_default_mappings bool (optional, defaut:true)
 M.setup = function(opts)
 	opts = opts or {}
 
@@ -64,19 +70,26 @@ M.setup = function(opts)
 	-- You can use the <expr> attribute to a map command to invoke a Vim function and use the returned value as the key sequence to execute.
 	-- This way will help use capture the motion
 	vim.api.nvim_set_keymap(
-		--print(vim.inspect(content))
 		"n",
 		"<Plug>commentary_motion",
 		"v:lua.commentary.go('motion')",
 		{ noremap = true, expr = true }
 	)
+
+	local use_default_mappings = opts.use_default_mappings and opts.use_default_mappings or true
+
+	if use_default_mappings then
+		vim.api.nvim_set_keymap("x", "gc", "<Plug>commentary", { silent = true })
+		vim.api.nvim_set_keymap("n", "gcc", "<Plug>commentary", { silent = true })
+		vim.api.nvim_set_keymap("n", "gc", "<Plug>commentary_motion", { silent = true })
+	end
 end
 
 M.use_default_mappings = function()
-	-- https://www.reddit.com/r/neovim/comments/ord878/how_to_map_command_with_nargs_range_to_a_lua/
-	vim.api.nvim_command(
-		[[command! -range -bar Commentary call luaeval("require'commentary'.go(_A)",[<line1>,<line2>])]]
-	)
+	--https://www.reddit.com/r/neovim/comments/ord878/how_to_map_command_with_nargs_range_to_a_lua/
+	--vim.api.nvim_command(
+	--	[[command! -range -bar Commentary call luaeval("require'commentary'.go(_A)",[<line1>,<line2>])]]
+	--)
 	vim.api.nvim_set_keymap("x", "gc", "<Plug>commentary", { silent = true })
 	vim.api.nvim_set_keymap("n", "gcc", "<Plug>commentary", { silent = true })
 	vim.api.nvim_set_keymap("n", "gc", "<Plug>commentary_motion", { silent = true })
