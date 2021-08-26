@@ -7,7 +7,9 @@ end
 
 local default_langugages_config = {
 	go = { "//", { "/*", "*/" }, false },
-	lua = { "--", { "--[[", "--]]" }, true },
+	lua = { "--", { "--[[", "--]]" }, false},
+	tyescript = { "//", { "/*", "*/" }, false },
+	vim = { "\"", {}, false},
 }
 
 --the config structure contains the following:
@@ -45,7 +47,5 @@ M.set_opts = function(config)
 	M.languages = vim.tbl_deep_extend("keep", user_config, default_langugages_config)
   return M
 end
-
---M.language_config = M.set_opts()
 
 return M
