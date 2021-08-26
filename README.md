@@ -1,7 +1,9 @@
 # commentary.nvim
 Neovim plugin to comment out/in a text written in lua. Support comment out a single line, a visual selection and a motion.
 
-[![screenshot.gif](https://s9.gifyu.com/images/screenshot.gif)](https://gifyu.com/image/GiVm)## Getting started
+[![screenshot.gif](https://s9.gifyu.com/images/screenshot.gif)](https://gifyu.com/image/GiVm)
+
+## Getting started
 
 ### Requirements
 - Neovim 0.5+
