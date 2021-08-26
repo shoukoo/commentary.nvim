@@ -5,6 +5,9 @@ local if_nil = function(value, default_value)
 	return value ~= nil and value or default_value
 end
 
+-- index1 single_line_comment
+-- index2 multiline comment
+-- index3 prefer_multicomment
 local default_langugages_config = {
 	go = { "//", { "/*", "*/" }, false },
 	lua = { "--", { "--[[", "--]]" }, false},
