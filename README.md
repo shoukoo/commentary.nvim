@@ -36,7 +36,7 @@ vim.api.nvim_set_keymap("n", "<your key>", "<Plug>commentary_motion", { silent =
 ```
 
 ### Add additional languages
-Currently, this plugin only supports a few languages, feel free to create a PR and add them in [here](lua/commentary/config.kya#L9). Otherwise, you can also pass them into the setup function like this:
+Currently, this plugin only supports a few languages, feel free to create a PR and add them in [here](lua/commentary/config.lua#L9). Otherwise, you can also pass them into the setup function like this:
 
 
 ```lua
