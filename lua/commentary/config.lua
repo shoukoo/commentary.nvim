@@ -5,6 +5,9 @@ local if_nil = function(value, default_value)
 	return value ~= nil and value or default_value
 end
 
+-- default_langugages_config table contains key & value
+-- key: the language name
+-- value: a table with the following elements
 -- index1 single_line_comment
 -- index2 multiline comment
 -- index3 prefer_multicomment
@@ -16,10 +19,10 @@ local default_langugages_config = {
 }
 
 --the config structure contains the following:
---key is a language name
---value is a table that has the following keys
+--key: the language name
+--value: is a table that has the following keys/values
 --single_line_comment: string
---multiline_comment: table that has opening/closing comment strings
+--multiline_comment: table that has opening/closing comment strings (optional)
 --perfer_multiline: boolean
 --example:
 --{ "go"= { single_line_comment= "//", multiline_comment= { "/*", "*/"} , perfer_multiline= false } }

@@ -2,15 +2,13 @@ local config = require("commentary.config")
 Config = {}
 local M = {}
 
--- A table to store comment string for each language
-
 M.go = function(...)
 	local arg = { ... }
 
 	local language = Config.languages[vim.bo.filetype]
-	-- this set opertorfunc, which is the function that will be called after a motion e.g. "gcj5"
-	-- The process will be as follow: typing gc will set the operatorfunc and return g@,
-	-- if you now do a motion like 5j, then the operatorfunc gets called.
+	--this set opertorfunc, which is the function that will be called after a motion e.g. "gcj5"
+	--The process will be as follow: typing gc will set the operatorfunc and return g@,
+	--if you now do a motion like 5j, then the operatorfunc gets called.
 	if arg[1] == "motion" then
 		vim.api.nvim_set_option("operatorfunc", "v:lua.commentary.go")
 		return "g@"
@@ -26,7 +24,7 @@ M.go = function(...)
 		--start and the end of the motion, respectively. vim.fn.getpos() returns
 		--a tuple with the line and column of the position.
 		if language[3] then
-      M.multicomment_in_multi_line(vim.fn.getpos("'[")[2], vim.fn.getpos("']")[2], language)
+      M.multiline_comment_in_multi_line(vim.fn.getpos("'[")[2], vim.fn.getpos("']")[2], language)
 		else
       M.comment_in_multi_single_line(vim.fn.getpos("'[")[2], vim.fn.getpos("']")[2], language)
 		end
@@ -37,14 +35,13 @@ M.go = function(...)
 		vim.api.nvim_input("<esc>")
 	elseif mode == "V" then
 		--Visual mode
-		--the index 3 is perfer_multiline boolean
+		--the index 3 is the prefer_multiline boolean
 		if language[3] then
-			M.multicomment_in_multi_line(vim.fn.getpos("v")[2], vim.fn.getcurpos()[2], language)
+			M.multiline_comment_in_multi_line(vim.fn.getpos("v")[2], vim.fn.getcurpos()[2], language)
 		else
 			M.comment_in_multi_single_line(vim.fn.getpos("v")[2], vim.fn.getcurpos()[2], language)
 		end
-
-		-- switch from visual mode to normal mode
+		--switch from visual mode to normal mode
 		vim.api.nvim_input("<esc>")
 	end
 end
@@ -200,8 +197,8 @@ function M.is_multiline_comment(content, language)
 	return false
 end
 
---Use multicomment strings to comment a block of code
-function M.multicomment_in_multi_line(line_number_start, line_number_end, language)
+--Use multiline comment strings to comment out a block of code
+function M.multiline_comment_in_multi_line(line_number_start, line_number_end, language)
 	local content = vim.api.nvim_buf_get_lines(0, line_number_start - 1, line_number_end, false)
 
 	local new_content = {}
@@ -214,10 +211,10 @@ function M.multicomment_in_multi_line(line_number_start, line_number_end, langua
 		table.remove(content, #content)
 		new_content = content
 	else
-		--low_index is to get the line that has shortest space prefix
-		--and we use this index to prepend the comment string
+		--low_index is to get the line that has shortest indent space prefix
+		--then prepend the same indent space with the comment string
 		local low_index
-		--loop throught the content to get the lowest index
+		--loop through each line to get the shortest indent space
 		for _, line in pairs(content) do
 			local current_index = string.find(line, "%S")
 			current_index = current_index == nil and 1 or current_index
