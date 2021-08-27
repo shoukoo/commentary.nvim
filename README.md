@@ -19,12 +19,21 @@ use 'shoukoo/commentary.nvim'
 Plug 'shoukoo/commentary.nvim'
 ```
 
+### Setup
+
 ### Use the default mappings
 The default keybindings are the same as in vim-commentary, meaning your can use the following keybindings
 - `gcc` to comment out a single line, 
 - `gc` to comment out a visual selection 
 - `gc<motion>` to commentout with a motion i.e. `gc5j`
 
+#### Disable the default mappings
+If you don't like the default mappings, set `use_default_mappings` to false in init.lua/vimrc
+```
+require("commentary").setup({
+  use_default_mappings = false 
+})
+```
 
 #### Customise your mappings
 You can also bind your own keys. Insert the following lines into your `init.lua` and replace `<your key>` with the valid keys.
