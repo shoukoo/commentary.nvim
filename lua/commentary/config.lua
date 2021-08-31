@@ -1,6 +1,6 @@
 local M = {}
 
---helper function to use default value if the user vaule is nil
+-- helper function to use default value if the user vaule is nil
 local if_nil = function(value, default_value)
 	return value ~= nil and value or default_value
 end
@@ -8,24 +8,24 @@ end
 -- default_langugages_config table contains key & value
 -- key: the language name
 -- value: a table with the following elements
--- index1 single_line_comment
--- index2 multiline comment
--- index3 prefer_multicomment
+-- - index1 single_line_comment, intentionally append an extra space
+-- - index2 multiline comment
+-- - index3 prefer_multicomment
 local default_langugages_config = {
-	go = { "//", { "/*", "*/" }, false },
-	lua = { "--", { "--[[", "--]]" }, false},
-	tyescript = { "//", { "/*", "*/" }, false },
-	vim = { "\"", {}, false},
+	go = { "// ", { "/*", "*/" }, false },
+	lua = { "-- ", { "--[[", "--]]" }, false},
+	tyescript = { "// ", { "/*", "*/" }, false },
+	vim = { "\" ", {}, false},
 }
 
---the config structure contains the following:
---key: the language name
---value: is a table that has the following keys/values
---single_line_comment: string
---multiline_comment: table that has opening/closing comment strings (optional)
---perfer_multiline: boolean
---example:
---{ "go"= { single_line_comment= "//", multiline_comment= { "/*", "*/"} , perfer_multiline= false } }
+-- the config structure contains the following:
+-- key: the language name
+-- value: is a table that has the following keys/values
+-- single_line_comment: string
+-- multiline_comment: table that has opening/closing comment strings (optional)
+-- perfer_multiline: boolean
+-- example:
+-- { "go"= { single_line_comment= "//", multiline_comment= { "/*", "*/"} , perfer_multiline= false } }
 M.set_opts = function(config)
 	local user_config = {}
 	config = config == nil and {} or config
