@@ -1,0 +1,78 @@
+*commentary.txt* commentary
+
+A Neovim plugin to provide an efficient way to comment out code, it supports multiple languages, and also allowing customisation.
+
+                            COMMENTARY-NVIM REFERENCE MANUAL
+
+CONTENTS                                                           *commentary*
+
+    1. Prerequisites......... |commentary-prerequisites|
+    2. Getting Started....... |commentary-getting-started|
+    3. Lua API............... |commentary-lua-api|
+    4. Example Usage......... |commentary-example-usage|
+    5. Default Mappings.......|commentary-default-mappings|
+
+================================================================================
+PREREQUISITES                                        *commentary-prerequisites*
+
+- Nvim v0.5.x
+================================================================================
+GETTING STARTED                                    *commentary-getting-started*
+
+Install via your favorite package manager.
+
+Packer:
+>
+  use({"shoukoo/commentary.nvim"})
+<
+Vim-plug:
+>
+  Plug "shoukoo/commentary.nvim"
+<
+
+================================================================================
+LUA API                                                    *commentary-lua-api*
+
+								 *go()*
+go() 			`go` is the primary callout function to decide which comment out function to run
+
+                                                                 *setup()*
+setup()           	`setup` is an entry point to setup the plugin
+
+								 *use_default_mappings()*
+use_default_mappings()  `use_default_mappings` can be called to setup the default mappings
+
+================================================================================
+Example Usage                                              *commentary-lua-examples*
+
+Disable the default mappings: >
+require("commentary").setup({
+  use_default_mappings = false 
+})
+<
+
+Customise your mappings: >
+vim.api.nvim_set_keymap("x", "<your key>", "<Plug>commentary", { silent = true })
+vim.api.nvim_set_keymap("n", "<your key>", "<Plug>commentary", { silent = true })
+vim.api.nvim_set_keymap("n", "<your key>", "<Plug>commentary_motion", { silent = true })
+<
+
+Add additional languages:>
+require("commentary").setup({languages= 
+  {
+    go = {single_line_comment =  "//", multiline_comment = {"/*", "*/"}, prefer_multiline = true}
+    typescript = {single_line_comment =  "//", multiline_comment = {"/**", "*/"}, prefer_mutiline = true}
+  }
+})
+<
+================================================================================
+Default mappings                                           *commentary-lua-default-mappings*
+
+                                                	   *gc*
+gc{motion}              Comment or uncomment lines that {motion} moves over.
+
+                                                	   *gcc*
+gcc                     Comment or uncomment [count] lines.
+
+                                                	   *v_gc*
+{Visual}gc              Comment or uncomment the highlighted lines.
