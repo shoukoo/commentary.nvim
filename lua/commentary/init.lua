@@ -201,10 +201,11 @@ end
 -- @param c table -- config
 function M.rebuild_line(is_comment_out, comment_string, low_index, line, c)
 	local add_space = c.options.append_space and " " or ""
+  local total_comment_string = add_space and #comment_string + 1 or #comment_string
 	local new_line = is_comment_out
 			and string.sub(line, 0, low_index - 1) .. string.sub(
 				line,
-				low_index + #comment_string,
+				low_index + total_comment_string,
 				#line
 			)
 		or string.sub(line, 0, low_index - 1)
