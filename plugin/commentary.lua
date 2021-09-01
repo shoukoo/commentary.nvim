@@ -5,5 +5,5 @@ end
 vim.g.loaded_commentary = true
 
 
-local commentary = require("commentary")
+commentary = require("commentary")
 commentary.setup()
