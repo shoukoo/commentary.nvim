@@ -10,7 +10,7 @@ M.go = function(...)
 	if language == nil then
 		error(
 			string.format(
-				"%s is not supported. You can add it manually, check ':h commentary_language' for more info",
+				"%s is not supported. You can add it manually, check ':h commentary_lua_example' for more info",
 				vim.bo.filetype
 			)
 		)

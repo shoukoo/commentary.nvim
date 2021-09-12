@@ -16,6 +16,7 @@ local default_langugages_config = {
 	lua = { "--", { "--[[", "--]]" }, false },
 	tyescript = { "//", { "/*", "*/" }, false },
 	vim = { '"', {}, false },
+	yaml= { '#', {}, false },
 }
 
 local default_options = {
