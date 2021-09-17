@@ -14,6 +14,7 @@ end
 local default_langugages_config = {
 	go = { "//", { "/*", "*/" }, false },
 	lua = { "--", { "--[[", "--]]" }, false },
+	sh = { '#', {}, false },
 	tyescript = { "//", { "/*", "*/" }, false },
 	vim = { '"', {}, false },
 	yaml= { '#', {}, false },
