@@ -6,15 +6,7 @@ local M = {}
 M.go = function(...)
 	local arg = { ... }
 
-	local language = Config.languages[vim.bo.filetype]
-	if language == nil then
-		error(
-			string.format(
-				"%s is not supported. You can add it manually, check ':h commentary_lua_example' for more info",
-				vim.bo.filetype
-			)
-		)
-	end
+	local language = M.language_decider()
 	-- this set opertorfunc, which is the function that will be called after a motion e.g. "gcj5"
 	-- The process will be as follow: typing gc will set the operatorfunc and return g@,
 	-- if you now do a motion like 5j, then the operatorfunc gets called.
@@ -121,8 +113,7 @@ end
 -- @param c table - configuration
 function M.comment_in_line(line_number, c)
 	-- get the content from this line_number
-	local language = c.languages[vim.bo.filetype]
-	local append_space = c.options.append_space
+	local language = M.language_decider()
 	local content = vim.api.nvim_buf_get_lines(0, line_number - 1, line_number, false)[1]
 
 	-- if content is nil or empty, then ignore the request
@@ -172,7 +163,7 @@ function M.comment_in_multi_single_line(line_number_start, line_number_end, c)
 	-- low_index is to get the index position of a whitespace that has shortest indent
 	-- and we use this index to prepend the comment string
 	local low_index
-	local language = c.languages[vim.bo.filetype]
+	local language = M.language_decider()
 	local is_comment_out = M.is_comment_multi_single(line_number_start, line_number_end, language)
 	-- loop throught the content to get the lowest index
 	for _, line in pairs(content) do
@@ -239,7 +230,7 @@ function M.multiline_comment_in_multi_line(line_number_start, line_number_end, c
 	local content = vim.api.nvim_buf_get_lines(0, line_number_start - 1, line_number_end, false)
 
 	local new_content = {}
-	local language = c.languages[vim.bo.filetype]
+	local language = M.language_decider()
 	local comment_string_open = language[2][1]
 	local comment_string_close = language[2][2]
 	local is_multiline_comment = M.is_multiline_comment(content, language)
@@ -276,6 +267,15 @@ function M.multiline_comment_in_multi_line(line_number_start, line_number_end, c
 		end
 	end
 	vim.api.nvim_buf_set_lines(0, line_number_start - 1, line_number_end, false, new_content)
+end
+
+function M.language_decider()
+	local language = Config.languages[vim.bo.filetype]
+	if language == nil then
+    -- Use default one if none found
+    language = Config.languages["default"]
+	end
+  return language
 end
 
 return M

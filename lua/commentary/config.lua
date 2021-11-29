@@ -12,6 +12,7 @@ end
 -- index2 multiline comment
 -- index3 prefer_multicomment
 local default_langugages_config = {
+	default = { "//", { "/*", "*/" }, false },
 	go = { "//", { "/*", "*/" }, false },
 	lua = { "--", { "--[[", "--]]" }, false },
 	sh = { '#', {}, false },
