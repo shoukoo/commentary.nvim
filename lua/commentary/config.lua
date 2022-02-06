@@ -17,7 +17,8 @@ local default_langugages_config = {
 	sh = { '#', {}, false },
 	typescript = { "//", { "/*", "*/" }, false },
 	vim = { '"', {}, false },
-	yaml= { '#', {}, false },
+	yaml = { '#', {}, false },
+	ruby = { '#', {}, false },
 }
 
 local default_options = {
