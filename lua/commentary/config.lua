@@ -12,6 +12,7 @@ end
 -- index2 multiline comment
 -- index3 prefer_multicomment
 local default_langugages_config = {
+	default = { "//", { "/*", "*/" }, false },
 	go = { "//", { "/*", "*/" }, false },
 	lua = { "--", { "--[[", "--]]" }, false },
 	sh = { '#', {}, false },
@@ -19,6 +20,7 @@ local default_langugages_config = {
 	vim = { '"', {}, false },
 	yaml = { '#', {}, false },
 	ruby = { '#', {}, false },
+	fish = { '#', {}, false },
 }
 
 local default_options = {
