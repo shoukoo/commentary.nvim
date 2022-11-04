@@ -84,6 +84,9 @@ M.setup = function(opts)
 		vim.api.nvim_set_keymap("n", "gcc", "<Plug>commentary", { silent = true })
 		vim.api.nvim_set_keymap("n", "gc", "<Plug>commentary_motion", { silent = true })
 	end
+
+  -- only run the setup once
+  vim.g.loaded_commentary = true
 end
 
 M.use_default_mappings = function()
