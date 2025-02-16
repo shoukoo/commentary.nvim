@@ -13,14 +13,15 @@ end
 -- index3 prefer_multicomment
 local default_langugages_config = {
 	default = { "//", { "/*", "*/" }, false },
+	fish = { '#', {}, false },
 	go = { "//", { "/*", "*/" }, false },
 	lua = { "--", { "--[[", "--]]" }, false },
+	ruby = { '#', {}, false },
 	sh = { '#', {}, false },
+	toml = { '#', {}, false },
 	typescript = { "//", { "/*", "*/" }, false },
 	vim = { '"', {}, false },
 	yaml = { '#', {}, false },
-	ruby = { '#', {}, false },
-	fish = { '#', {}, false },
 }
 
 local default_options = {
